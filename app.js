@@ -4,17 +4,14 @@
     // use first and only elevator
     const elevator = elevators[0];
 
-    // set up listeners for elevator calls on all floors
+    // let's track when there are passengers waiting on each floor
     for (let i = 0; i < floors.length; i++) {
+      floors[i]["waiting"] = false;
       floors[i].on("up_button_pressed", function () {
-        if (!elevator.destinationQueue.includes(i)) {
-          elevator.destinationQueue.push(i);
-        }
+        floors[i]["waiting"] = true;
       });
       floors[i].on("down_button_pressed", function () {
-        if (!elevator.destinationQueue.includes(i)) {
-          elevator.destinationQueue.push(i);
-        }
+        floors[i]["waiting"] = true;
       });
     }
 
@@ -25,10 +22,15 @@
 
     // when passing a floor ...
     elevator.on("passing_floor", function(floorNum, direction) {
+      if (floors[floorNum]["waiting"] == true) {
+        elevator.goToFloor(floorNum, true);
+      }
     });
 
     // when elevator is stopped at a floor ...
     elevator.on("stopped_at_floor", function(floorNum) {
+      // clear passengers waiting on this floor
+      floors[floorNum]["waiting"] = false;
     });
 
     // when elevator is idle ...
@@ -38,6 +40,6 @@
 
   },
   update: function(dt, elevators, floors) {
-    console.log(`destinationQueue: ${elevators[0].destinationQueue}`);
+    // silence is golden
   }
 }
