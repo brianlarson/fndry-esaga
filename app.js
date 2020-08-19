@@ -38,6 +38,24 @@
       elevator.goToFloor(0);
     });
 
+    // function for updating up/down indicators
+    function updateIndicators(direction = elevator.destinationDirection()) {
+      switch (direction) {
+        case "up":
+          elevator.goingUpIndicator(true);
+          elevator.goingDownIndicator(false);
+          break;
+        case "down":
+          elevator.goingUpIndicator(false);
+          elevator.goingDownIndicator(true);
+          break;
+        default:
+          elevator.goingUpIndicator(true);
+          elevator.goingDownIndicator(true);
+          break;
+      }
+    }
+
   },
   update: function(dt, elevators, floors) {
     // silence is golden
