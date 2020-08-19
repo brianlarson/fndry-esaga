@@ -6,8 +6,6 @@
 
     // when a passenger pushes a floor button ...
     elevator.on("floor_button_pressed", function(floorNum) {
-      // log which button
-      console.log(`floor ${floorNum} button pressed`);
       // go to that floor
       elevator.goToFloor(floorNum);
     });
