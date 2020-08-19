@@ -9,10 +9,10 @@
       // let's track when there are passengers waiting on each floor
       for (let i = 0; i < floors.length; i++) {
         floors[i]["waiting"] = false;
-        floors[i].on("up_button_pressed", function () {
+        floors[i].on("up_button_pressed", function() {
           floors[i]["waiting"] = true;
         });
-        floors[i].on("down_button_pressed", function () {
+        floors[i].on("down_button_pressed", function() {
           floors[i]["waiting"] = true;
         });
       }
@@ -36,7 +36,7 @@
       });
 
       // when elevator is idle ...
-      elevator.on("idle", function () {
+      elevator.on("idle", function() {
         elevator.goToFloor(0);
       });
 
