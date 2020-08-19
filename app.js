@@ -6,16 +6,30 @@
       // set elevator
       const elevator = elevators[i];
 
+      // give each elevator an id
+      elevators[i]["id"] = i + 1;
+      
+      // give each elevator an active status
+      elevators[i]["active"] = false;
+
       // let's track when there are passengers waiting on each floor
       for (let i = 0; i < floors.length; i++) {
         floors[i]["waiting"] = false;
         floors[i].on("up_button_pressed", function() {
           floors[i]["waiting"] = true;
-          elevator.goToFloor(i);
+          if (elevator.getPressedFloors().includes(i)) {
+            elevator.goToFloor(i, true);
+          } else {
+            elevator.goToFloor(i);
+          }
         });
         floors[i].on("down_button_pressed", function() {
           floors[i]["waiting"] = true;
-          elevator.goToFloor(i);
+          if (elevator.getPressedFloors().includes(i)) {
+            elevator.goToFloor(i, true);
+          } else {
+            elevator.goToFloor(i);
+          }
         });
       }
 
